@@ -721,13 +721,40 @@
             border-radius: 16px;
             max-width: 420px;
             width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height: 90vh; /* 保持最大高度为视口的90% */
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 8px 32px rgba(60, 0, 190, 0.1);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column; /* 使用flex布局 */
+         }
+
+        /* 添加表单容器样式 */
+        .modal-form-container {
+            overflow-y: auto; /* 允许表单内容滚动 */
+            padding-right: 8px; /* 为滚动条预留空间 */
+            flex: 1; /* 占满可用空间 */
+        }
+
+        /* 优化滚动条样式 */
+        .modal-form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-form-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .modal-form-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .modal-form-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .close {
@@ -1076,80 +1103,82 @@
 
     <div class="modal" id="configModal">
         <div class="modal-content">
-            <h2>配置新场景</h2>
-            <form id="configForm">
-                <div class="form-group">
-                    <label for="zoneUrl">区域 URL *</label>
-                    <select id="zoneUrl" required>
-                        <option value="">请选择区域</option>
-                        <option value="us1.make.com">us1.make.com(美国1区)</option>
-                        <option value="us2.make.com">us2.make.com(美国2区)</option>
-                        <option value="eu1.make.com">eu1.make.com(欧洲1区)</option>
-                        <option value="eu2.make.com">eu2.make.com(欧洲2区)</option>
-                        <option value="us1.make.celonis.com">us1.make.celonis.com</option>
-                        <option value="eu1.make.celonis.com">eu1.make.celonis.com</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="apiToken">API Token *</label>
-                    <input type="password" id="apiToken" placeholder="输入您的 API Token" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="scenarioId">Scenario ID *</label>
-                    <input type="text" id="scenarioId" placeholder="输入场景 ID" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="data">Data (可选，JSON 格式)</label>
-                    <textarea id="data" placeholder='{"key": "value"}'></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="buttonName">按钮名称 *</label>
-                    <input type="text" id="buttonName" placeholder="给这个按钮起个名字" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="buttonRemark">按钮备注</label>
-                    <input type="text" id="buttonRemark" placeholder="描述这个按钮的功能或用途">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group half-width">
-                        <label for="buttonIcon">按钮图标</label>
-                        <div class="selector-input" onclick="openEmojiPicker()">
-                            <span id="selectedEmoji">🚀</span>
-                            <span class="selector-arrow">▼</span>
-                        </div>
-                        <input type="hidden" id="buttonIcon" value="🚀">
-                    </div>
-
-                    <div class="form-group half-width">
-                        <label for="buttonColor">按钮颜色</label>
-                        <div class="selector-input" onclick="openColorPicker()">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <div class="color-preview" id="selectedColorPreview" style="background: #FFB3BA;"></div>
-                                <span id="selectedColorName">粉红</span>
-                            </div>
-                            <span class="selector-arrow">▼</span>
-                        </div>
-                        <input type="hidden" id="buttonColor" value="#FFB3BA">
-                    </div>
-                </div>
-
-                <div class="form-buttons">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
-                    <button type="submit" class="btn btn-primary">保存</button>
-                </div>
-            </form>
-            
-            <!-- 教程链接 -->
-            <div class="modal-tutorial-link">
-                <a href="https://www.ricoxueai.cn" target="_blank">查看教程说明</a>
+    <h2>配置新场景</h2>
+    <div class="modal-form-container"> <!-- 新增的滚动容器 -->
+        <form id="configForm">
+            <div class="form-group">
+                <label for="zoneUrl">区域 URL *</label>
+                <select id="zoneUrl" required>
+                    <option value="">请选择区域</option>
+                    <option value="us1.make.com">us1.make.com(美国1区)</option>
+                    <option value="us2.make.com">us2.make.com(美国2区)</option>
+                    <option value="eu1.make.com">eu1.make.com(欧洲1区)</option>
+                    <option value="eu2.make.com">eu2.make.com(欧洲2区)</option>
+                    <option value="us1.make.celonis.com">us1.make.celonis.com</option>
+                    <option value="eu1.make.celonis.com">eu1.make.celonis.com</option>
+                </select>
             </div>
+
+            <div class="form-group">
+                <label for="apiToken">API Token *</label>
+                <input type="password" id="apiToken" placeholder="输入您的 API Token" required>
+            </div>
+
+            <div class="form-group">
+                <label for="scenarioId">Scenario ID *</label>
+                <input type="text" id="scenarioId" placeholder="输入场景 ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="data">Data (可选，JSON 格式)</label>
+                <textarea id="data" placeholder='{"key": "value"}'></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="buttonName">按钮名称 *</label>
+                <input type="text" id="buttonName" placeholder="给这个按钮起个名字" required>
+            </div>
+
+            <div class="form-group">
+                <label for="buttonRemark">按钮备注</label>
+                <input type="text" id="buttonRemark" placeholder="描述这个按钮的功能或用途">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label for="buttonIcon">按钮图标</label>
+                    <div class="selector-input" onclick="openEmojiPicker()">
+                        <span id="selectedEmoji">🚀</span>
+                        <span class="selector-arrow">▼</span>
+                    </div>
+                    <input type="hidden" id="buttonIcon" value="🚀">
+                </div>
+
+                <div class="form-group half-width">
+                    <label for="buttonColor">按钮颜色</label>
+                    <div class="selector-input" onclick="openColorPicker()">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div class="color-preview" id="selectedColorPreview" style="background: #FFB3BA;"></div>
+                            <span id="selectedColorName">粉红</span>
+                        </div>
+                        <span class="selector-arrow">▼</span>
+                    </div>
+                    <input type="hidden" id="buttonColor" value="#FFB3BA">
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </form>
+
+        <!-- 教程链接 -->
+        <div class="modal-tutorial-link">
+            <a href="https://www.ricoxueai.cn" target="_blank">查看教程说明</a>
         </div>
+    </div> <!-- 关闭滚动容器 -->
+</div>
     </div>
 
     <div class="toast" id="toast"></div>
